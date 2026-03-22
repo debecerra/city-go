@@ -1,13 +1,22 @@
-// request.go
 package models
 
-type RecommendRequest struct {
-	Origin      LatLng `json:"origin"`
-	Destination LatLng `json:"destination"`
-	DepartAt    string `json:"depart_at,omitempty"` // ISO8601, empty = now
+type RecommendResponse struct {
+	Best        string       `json:"best"`   // "bike", "transit", "walk", "rideshare"
+	Reason      string       `json:"reason"` // human-readable
+	Modes       []ModeOption `json:"modes"`
+	Conditions  []Condition  `json:"conditions"` // weather, transit status etc.
+	GeneratedAt string       `json:"generated_at"`
 }
 
-type LatLng struct {
-	Lat float64 `json:"lat"`
-	Lng float64 `json:"lng"`
+type ModeOption struct {
+	Mode        string `json:"mode"`
+	DurationMin int    `json:"duration_min"`
+	Cost        string `json:"cost,omitempty"` // "$2.75", "Free", "$14–19"
+	Summary     string `json:"summary"`
+	Alert       string `json:"alert,omitempty"` // "8 min delay", "Surge 1.4×"
+}
+
+type Condition struct {
+	Status  string `json:"status"` // "ok", "warn"
+	Message string `json:"message"`
 }
