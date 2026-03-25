@@ -1,4 +1,3 @@
-// request.go
 package models
 
 type RecommendRequest struct {
